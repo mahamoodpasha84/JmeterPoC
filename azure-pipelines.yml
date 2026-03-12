@@ -23,7 +23,7 @@ steps:
 
 - script: |
     # Run JMeter test plan (.jmx script)
-    /opt/jmeter/bin/jmeter -n -t $(Build.SourcesDirectory)/My First Test.jmx \
+    /opt/jmeter/bin/jmeter -n -t $(Build.SourcesDirectory)/Azure-auth-poc.jmx \
       -l $(Build.SourcesDirectory)/results.jtl \
       -e -o $(Build.SourcesDirectory)/report
   displayName: 'Run JMeter Test Plan'
