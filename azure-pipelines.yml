@@ -25,7 +25,7 @@ steps:
 
     # Copy report into repo folder for commit
     mkdir -p $(Build.SourcesDirectory)/jmeter-report
-    cp -r $(Build.SourcesDirectory)/tests/report/* $(Build.SourcesDirectory)/jmeter-report/
+    cp -r $(Build.SourcesDirectory)/report/* $(Build.SourcesDirectory)/jmeter-report/
   displayName: 'Run JMeter Test Plan & Copy Report'
 
 - task: PublishBuildArtifacts@1
