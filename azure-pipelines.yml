@@ -20,8 +20,8 @@ steps:
 - script: |
     # Run JMeter test plan (.jmx script)
     /opt/jmeter/bin/jmeter -n -t $(Build.SourcesDirectory)/Azure-auth-poc.jmx \
-      -l $(Build.SourcesDirectory)/tests/results.jtl \
-      -e -o $(Build.SourcesDirectory)/tests/report
+      -l $(Build.SourcesDirectory)/results.jtl \
+      -e -o $(Build.SourcesDirectory)/report
 
     # Copy report into repo folder for commit
     mkdir -p $(Build.SourcesDirectory)/jmeter-report
