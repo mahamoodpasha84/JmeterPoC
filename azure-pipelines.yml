@@ -9,11 +9,30 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    sudo apt-get update && sudo apt-get install -y wget unzip
+    # Download and install Apache JMeter
+    JMETER_VERSION=5.6.3
+    wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-$JMETER_VERSION.tgz
+    tar -xvzf apache-jmeter-$JMETER_VERSION.tgz
+    sudo mv apache-jmeter-$JMETER_VERSION /opt/jmeter
+    /opt/jmeter/bin/jmeter -v
+  displayName: 'Install Apache JMeter'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    # Run JMeter test plan (.jmx script)
+    /opt/jmeter/bin/jmeter -n -t $(Build.SourcesDirectory)/My First Test.jmx \
+      -l $(Build.SourcesDirectory)/results.jtl \
+      -e -o $(Build.SourcesDirectory)/report
+  displayName: 'Run JMeter Test Plan'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.SourcesDirectory)/report'
+    ArtifactName: 'jmeter-report'
+    publishLocation: 'Container'
+  displayName: 'Publish JMeter HTML Report'
+
+ 
